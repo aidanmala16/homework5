@@ -321,11 +321,56 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
     the max depth.
     */
     public int maxDepth() {
-        //return(maxDepth(root));
-        return 0;
+        int L = 0;
+        int R = 0;
+        if(root.getLeft() != null){
+            L = 1+maxDepth(root.getLeft());
+        }
+        if(root.getRight() != null){
+            R = 1+maxDepth(root.getRight());
+        }
+        if(root.getLeft() == null && root.getRight() == null){
+            return 0;
+        }
+        if(root.getLeft() == null){
+            return R;
+        }
+        if(root.getRight() == null){
+            return L;
+        }
+        if(R>L){
+            return R;
+        }
+        if(L>R){
+            return L;
+        }
+        return L;
     }
-    private int maxDepth(Node node) {
-        return 0;
+    private int maxDepth(BSTNode<T> node) {
+        int L = 0;
+        int R = 0;
+        if(node.getLeft() != null){
+            L = 1+maxDepth(node.getLeft());
+        }
+        if(node.getRight() != null){
+            R = 1+maxDepth(node.getRight());
+        }
+        if(node.getLeft() == null && node.getRight() == null){
+            return 0;
+        }
+        if(node.getLeft() == null){
+            return R;
+        }
+        if(node.getRight() == null){
+            return L;
+        }
+        if(R>L){
+            return R;
+        }
+        if(L>R){
+            return L;
+        }
+        return L;
     }
 
     //TODO: 
@@ -335,13 +380,18 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
     the min value.
     */
     public int minValue() {
-        //return( minValue(root) );
-        return 0;
+        if(root.getLeft() == null){
+            return (int)root.getInfo();
+        }
+        return minValue(root.getLeft());
     }
 
     
-    private int minValue(Node node) {
-       return 0;
+    private int minValue(BSTNode<T> node) {
+       if(node.getLeft() == null){
+            return (int)node.getInfo();
+        }
+        return minValue(node.getLeft());
     }
 
     //TODO:
@@ -361,18 +411,40 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
         / \
         2   3
         /   /
-    1   3
-    /
-    1
+        1   3
+        /
+        1
 
     Uses a recursive helper to recur over the tree
     and insert the duplicates.
     */
     public void doubleTree() {
-        
+        if(root == null){
+            return;
+        }
+        BSTNode<T> temp = new BSTNode(root.getInfo());
+        temp.setLeft(root.getLeft());
+        root.setLeft(temp);
+        if(temp.getLeft()!= null){
+            doubleTree(temp.getLeft());
+        }
+        if(root.getRight()!=null){
+            doubleTree(root.getRight());
+        }
     }
-    private void doubleTree(Node node) {
-    
+    private void doubleTree(BSTNode<T> node) {
+        if(node == null){
+            return;
+        }
+        BSTNode<T> temp = new BSTNode(node.getInfo());
+        temp.setLeft(node.getLeft());
+        node.setLeft(temp);
+        if(temp.getLeft()!= null){
+            doubleTree(temp.getLeft());
+        }
+        if(node.getRight()!=null){
+            doubleTree(node.getRight());
+        }
     }
 
     //TODO:
@@ -381,12 +453,34 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
     see if they are structurally identical.
     */
     public boolean sameTree(BinarySearchTree<T> other) {
-        //return( sameTree(root, other.root));
-        return false;
+        boolean a = false;
+        if(root.getInfo() == other.root.getInfo()){
+            a = sameTree(root.getLeft(),other.root.getLeft(),true);
+        }
+        return a;
     }
 
-    boolean sameTree(Node a, Node b) {
-        return false;
+    boolean sameTree(BSTNode<T> a, BSTNode<T> b, boolean a1) {
+        if(a1 == false){
+            return false;
+        }
+        if(a != null && b==null){
+            return false;
+        }
+        if(a==null&&b!=null){
+            return false;
+        }
+        if(a == null && b == null){
+            return true;
+        }
+        if(a.getInfo() == b.getInfo()){
+            a1 = sameTree(a.getLeft(),b.getLeft(),a1);
+            a1 = sameTree(a.getRight(),b.getRight(),a1);
+        }
+        else{
+            a1 = false;
+        }
+        return a1;
     }
 
 }

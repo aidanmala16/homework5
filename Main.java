@@ -78,5 +78,63 @@ public class Main {
             System.out.print(afterRemove.next() + " ");
         }
         System.out.println("\n");
+        System.out.println("=== Test 6: max depth ===");
+        bst.add(30);
+        bst.add(101);
+        bst.add(57);
+        bst.add(98);
+        System.out.println("The depth of the tree is "+bst.maxDepth());
+        System.out.print("Tree after additions: ");
+        Iterator<Integer> thing = bst.iterator();
+        while(thing.hasNext()){
+            System.out.print(thing.next() + " ");
+        }
+        System.out.println();
+        System.out.println("=== Test 7: minimum value ===");
+        System.out.println("The minimum value in this tree is "+bst.minValue());
+        System.out.println("=== Test 8: double tree ===");
+        bst.doubleTree();
+        System.out.print("The double tree is: ");
+        Iterator<Integer> thing1 = bst.iterator();
+        while(thing1.hasNext()){
+            System.out.print(thing1.next() + " ");
+        }
+        System.out.println();
+        System.out.println("=== Test 9: same trees ===");
+        System.out.print("Testing two equal trees: ");
+        BinarySearchTree<Integer> bst1 = new BinarySearchTree<>();
+        BinarySearchTree<Integer> bst2 = new BinarySearchTree<>();
+        bst1.add(60);
+        bst1.add(43);
+        bst1.add(80);
+        bst1.add(93);
+        bst1.add(75);
+        bst1.add(14);
+        bst1.add(50);
+        bst2.add(60);
+        bst2.add(43);
+        bst2.add(80);
+        bst2.add(93);
+        bst2.add(75);
+        bst2.add(14);
+        bst2.add(50);
+        if(bst1.sameTree(bst2)){
+            System.out.println("Success!");
+        }
+        else{
+            System.out.println("Failure");
+        }
+        bst2.remove(14);
+        Iterator<Integer> thing2 = bst2.iterator();
+        while(thing2.hasNext()){
+            System.out.print(thing2.next() + " ");
+        }
+        System.out.print("Testing two unequal trees: ");
+        if(bst1.sameTree(bst2)){
+            System.out.println("Failure");
+        }
+        else{
+            System.out.println("Success!");
+        }
     }
 }
